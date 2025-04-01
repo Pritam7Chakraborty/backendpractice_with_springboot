@@ -1,8 +1,9 @@
 package com.pritam.student_management.controller;
 import com.pritam.student_management.model.Student;
-import com.pritam.student_management.repository.StudentRepository;
+import com.pritam.student_management.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import  java.util.Optional;
@@ -11,40 +12,35 @@ import  java.util.Optional;
 @RequestMapping("/students")
 public class StudentController {
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     //Get all students
     @GetMapping
     public List<Student> getAllStudents(){
-        return studentRepository.findAll();
+        return studentService.getAllStudents();
     }
     //Get student by ID
     @GetMapping("/{id}")
     public Optional <Student> getStudentById(@PathVariable long id){
-        return studentRepository.findById(id);
+        return studentService.getStudentById(id);
     }
 
     //create a new student
     @PostMapping
     public Student createStudent(@RequestBody Student student){
-        return studentRepository.save(student);
+        return studentService.addStudent(student);
     }
 
     //update a student
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable long id,@RequestBody Student student){
-        if(studentRepository.existsById(id)){
-            student.setId(id);
-            return studentRepository.save(student);
-        }
-        return null;
+     return studentService.updateStudent(id,student);
     }
 
     //Delete a student
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable long id)
     {
-        studentRepository.deleteById(id);
+        studentService.deleteStudent(id);
     }
-
 }

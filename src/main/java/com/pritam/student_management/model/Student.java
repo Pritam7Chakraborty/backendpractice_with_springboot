@@ -1,23 +1,23 @@
 package com.pritam.student_management.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 
 @Entity
 
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Auto generate ID
     private Long id;
+
     private String name;
     private int age;
 
     // Constructors
     public Student() {}
 
-    public Student(Long id, String name, int age) {
-        this.id = id;
+    public Student(Long id,String name, int age) {
         this.name = name;
+        this.id=id;
         this.age = age;
     }
 
